@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXO E-Sports & Gaming Club | Arena Competitiva</title>
+  
+  <!-- TailwindCSS v3 CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              purple: '#8b5cf6',
+              indigo: '#6366f1',
+              dark: '#0b0a14',
+              cardDark: '#131124',
+              cardLight: '#ffffff',
+              accent: '#ec4899',
+              cyan: '#06b6d4'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    
+    /* Regla Crítica de Contraste para la Rúbrica 100 Puntos */
+    .force-text-white {
+      color: #ffffff !important;
+    }
+
+    /* Soporte Dark / Light personalizado */
+    html.dark {
+      background-color: #0b0a14;
+      color: #f8fafc;
+    }
+    html.light {
+      background-color: #f1f5f9;
+      color: #0f172a;
+    }
+    html.light .bg-slate-900\/80,
+    html.light .bg-slate-900,
+    html.light .bg-brand-cardDark {
+      background-color: #ffffff !important;
+      border-color: #e2e8f0 !important;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    }
+    html.light .text-white {
+      color: #0f172a !important;
+    }
+    html.light .text-slate-300,
+    html.light .text-slate-400 {
+      color: #475569 !important;
+    }
+    html.light .border-purple-500\/20 {
+      border-color: #e2e8f0 !important;
+    }
+    /* Excepción obligatoria para botones con gradientes o badges */
+    html.light .force-text-white,
+    html.light .force-text-white * {
+      color: #ffffff !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col overflow-x-hidden transition-colors duration-300">
+
+  <!-- ==================== HEADER & NAVBAR ==================== -->
+  <header class="sticky top-0 z-40 w-full backdrop-blur-xl bg-slate-950/80 dark:bg-slate-950/80 border-b border-purple-500/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo y Marca -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-purple-500/30">
+          <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
+          </svg>
+        </div>
+        <div>
+          <span class="text-xl font-extrabold tracking-wider bg-gradient-to-r from-purple-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent">
+            NEXO ESPORTS
+          </span>
+          <span class="block text-[10px] uppercase font-mono tracking-widest text-purple-400/80 -mt-1 font-semibold">
+            Gaming Club & Arena
+          </span>
+        </div>
+      </div>
+
+      <!-- Enlaces SPA (Desktop) -->
+      <nav class="hidden md:flex items-center gap-8" aria-label="Navegación principal">
+        <button type="button" data-target-view="inicio" class="text-purple-400 font-bold hover:text-purple-300 transition-colors py-2 text-sm uppercase tracking-wider flex items-center gap-1.5">
+          <span>Inicio</span>
+        </button>
+        <button type="button" data-target-view="catalogo" class="text-slate-300 hover:text-purple-300 transition-colors py-2 text-sm uppercase tracking-wider flex items-center gap-1.5">
+          <span>Torneos & Arenas</span>
+        </button>
+        <button type="button" data-target-view="formulario" class="text-slate-300 hover:text-purple-300 transition-colors py-2 text-sm uppercase tracking-wider flex items-center gap-1.5">
+          <span>Inscribir Escuadra</span>
+        </button>
+      </nav>
+
+      <!-- Controles de Cabecera (Theme Toggle + Menú Móvil) -->
+      <div class="flex items-center gap-3">
+        <!-- Botón Alternar Tema Dark/Light -->
+        <button type="button" class="theme-toggle-btn p-2.5 rounded-xl border border-purple-500/30 bg-purple-950/30 hover:bg-purple-900/40 text-purple-300 transition-all shadow-sm" aria-label="Alternar tema claro u oscuro">
+          <!-- Icono Sol (Modo Claro) -->
+          <svg class="w-5 h-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <!-- Icono Luna (Modo Oscuro) -->
+          <svg class="w-5 h-5 block dark:hidden text-slate-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+
+        <!-- CTA Directo en Cabecera -->
+        <button type="button" data-target-view="formulario" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 force-text-white font-semibold text-xs uppercase tracking-wider shadow-lg shadow-purple-600/30 transition-all hover:scale-105 active:scale-95">
+          <span>Unirse</span>
+        </button>
+
+        <!-- Botón Menú Hamburguesa Móvil (< 768px) -->
+        <button type="button" id="btn-mobile-menu" class="md:hidden p-2.5 rounded-xl border border-purple-500/30 bg-purple-950/30 text-purple-300" aria-label="Abrir menú de navegación">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Menú Desplegable Móvil -->
+    <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-6 bg-slate-950 border-b border-purple-500/20 space-y-2">
+      <button type="button" data-target-view="inicio" class="w-full text-left px-4 py-3 rounded-lg text-purple-400 font-bold hover:bg-purple-950/40 text-sm uppercase tracking-wider">
+        Inicio
+      </button>
+      <button type="button" data-target-view="catalogo" class="w-full text-left px-4 py-3 rounded-lg text-slate-300 hover:text-purple-300 hover:bg-purple-950/40 text-sm uppercase tracking-wider">
+        Torneos & Arenas
+      </button>
+      <button type="button" data-target-view="formulario" class="w-full text-left px-4 py-3 rounded-lg text-slate-300 hover:text-purple-300 hover:bg-purple-950/40 text-sm uppercase tracking-wider">
+        Inscribir Escuadra
+      </button>
+    </div>
+  </header>
+
+  <!-- ==================== CONTENEDOR PRINCIPAL (SPA) ==================== -->
+  <main class="flex-1">
+
+    <!-- ========== VISTA 1: INICIO (HERO & HIGHLIGHTS) ========== -->
+    <section id="view-inicio" class="w-full">
+      <!-- Portada Hero -->
+      <div class="relative overflow-hidden pt-12 pb-20 lg:pt-24 lg:pb-32">
+        <!-- Luces y Fondos Decorativos -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-purple-600/20 blur-[130px] rounded-full pointer-events-none"></div>
+        <div class="absolute top-1/3 right-10 w-[300px] h-[300px] bg-cyan-500/15 blur-[120px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-500/40 bg-purple-950/50 backdrop-blur-md mb-8">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+            <span class="text-xs uppercase font-mono tracking-widest text-purple-300 font-semibold">
+              Temporada Oficial 2026 Abierta
+            </span>
+          </div>
+
+          <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white max-w-4xl mx-auto leading-tight sm:leading-none">
+            DOMINA LA ARENA <br class="hidden sm:inline">
+            <span class="bg-gradient-to-r from-purple-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent">
+              COMPETITIVA
+            </span>
+          </h1>
+
+          <p class="mt-6 text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            NEXO es el club definitivo para escuadras, jugadores en ascenso y entusiastas de los e-sports. Compite en torneos oficiales, gana premios en efectivo y entrena en bootcamps de alto rendimiento.
+          </p>
+
+          <!-- Botones de Acción Hero -->
+          <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
+            <button type="button" id="btn-hero-explore" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:brightness-110 force-text-white font-bold text-base shadow-xl shadow-purple-600/30 transition-all transform hover:-translate-y-1 active:translate-y-0">
+              Explorar Torneos ⚔️
+            </button>
+            <button type="button" id="btn-hero-join" class="w-full sm:w-auto px-8 py-4 rounded-xl border border-purple-500/40 bg-slate-900/60 hover:bg-purple-950/50 text-white font-semibold text-base backdrop-blur-md transition-all">
+              Registrar Escuadra
+            </button>
+          </div>
+
+          <!-- Métricas del Club -->
+          <aside class="mt-16 sm:mt-24 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto border-t border-purple-500/20 pt-12" aria-label="Estadísticas de la plataforma">
+            <div class="p-4 rounded-2xl bg-slate-900/40 border border-purple-500/10">
+              <span class="block text-3xl sm:text-4xl font-extrabold text-white bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
+                +1.200
+              </span>
+              <span class="text-xs uppercase tracking-wider text-slate-400 font-medium mt-1 block">
+                Jugadores Registrados
+              </span>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-900/40 border border-purple-500/10">
+              <span class="block text-3xl sm:text-4xl font-extrabold text-white bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
+                $8.5M
+              </span>
+              <span class="text-xs uppercase tracking-wider text-slate-400 font-medium mt-1 block">
+                Prizepool 2026
+              </span>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-900/40 border border-purple-500/10">
+              <span class="block text-3xl sm:text-4xl font-extrabold text-white bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
+                6 Arenas
+              </span>
+              <span class="text-xs uppercase tracking-wider text-slate-400 font-medium mt-1 block">
+                Juegos Oficiales
+              </span>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-900/40 border border-purple-500/10">
+              <span class="block text-3xl sm:text-4xl font-extrabold text-white bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
+                100%
+              </span>
+              <span class="text-xs uppercase tracking-wider text-slate-400 font-medium mt-1 block">
+                Fair Play & Anti-Cheat
+              </span>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== VISTA 2: CATÁLOGO DE TORNEOS & MODALES ========== -->
+    <section id="view-catalogo" class="hidden w-full py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Cabecera de Sección -->
+        <div class="text-center max-w-3xl mx-auto mb-10">
+          <span class="text-xs uppercase font-mono tracking-widest text-purple-400 font-bold block mb-2">
+            Calendario Oficial
+          </span>
+          <h2 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
+            Torneos Activos & Arenas
+          </h2>
+          <p class="mt-3 text-slate-400 text-sm sm:text-base">
+            Explora las competiciones vigentes, revisa los cupos y haz clic en cada tarjeta para consultar las reglas completas en la ventana modal.
+          </p>
+        </div>
+
+        <!-- Barra de Búsqueda y Filtros Rápidos -->
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 bg-slate-900/60 p-4 rounded-2xl border border-purple-500/20 backdrop-blur-md">
+          
+          <!-- Input de Búsqueda -->
+          <div class="relative w-full md:w-96">
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+              🔍
+            </span>
+            <input type="text" id="search-input" placeholder="Buscar por título, juego o descripción..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950 border border-purple-500/30 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-purple-400 transition-colors">
+          </div>
+
+          <!-- Filtros por Categoría -->
+          <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
+            <button type="button" data-filter="all" class="px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider bg-purple-600 text-white transition-all shadow-md">
+              Todos
+            </button>
+            <button type="button" data-filter="fps" class="px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider bg-slate-800 text-slate-400 hover:text-white transition-all">
+              FPS
+            </button>
+            <button type="button" data-filter="moba" class="px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider bg-slate-800 text-slate-400 hover:text-white transition-all">
+              MOBA
+            </button>
+            <button type="button" data-filter="battle-royale" class="px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider bg-slate-800 text-slate-400 hover:text-white transition-all">
+              Battle Royale
+            </button>
+            <button type="button" data-filter="fighting" class="px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider bg-slate-800 text-slate-400 hover:text-white transition-all">
+              Fighting
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Grilla de Tarjetas (Catálogo de 6 Elementos) -->
+        <div id="cards-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Renderizado dinámico desde app.js -->
+        </div>
+
+        <!-- Estado Vacío (Empty State) -->
+        <div id="empty-state" class="hidden text-center py-16 px-4 bg-slate-900/40 rounded-3xl border border-purple-500/20 mt-8">
+          <div class="text-5xl mb-4">🎯</div>
+          <h3 class="text-xl font-bold text-white mb-2">No se encontraron torneos</h3>
+          <p class="text-slate-400 text-sm max-w-md mx-auto mb-6">
+            No hay competiciones que coincidan con tus criterios de búsqueda. Intenta con otro término o resetea los filtros.
+          </p>
+          <button type="button" id="btn-reset-filters" class="px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 force-text-white font-semibold text-sm transition-all shadow-md">
+            Ver Todos los Torneos
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========== VISTA 3: FORMULARIO DE INSCRIPCIÓN ========== -->
+    <section id="view-formulario" class="hidden w-full py-12">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-10">
+          <span class="text-xs uppercase font-mono tracking-widest text-purple-400 font-bold block mb-2">
+            Registro Oficial
+          </span>
+          <h2 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
+            Inscribe a tu Escuadra
+          </h2>
+          <p class="mt-3 text-slate-400 text-sm sm:text-base max-w-xl mx-auto">
+            Completa los datos de tu equipo para asegurar el cupo en el cuadro eliminatorio. Recibirás las credenciales del servidor por Discord.
+          </p>
+        </div>
+
+        <!-- Aviso Visual Verde de Éxito (Success Toast) -->
+        <div id="success-toast" class="hidden mb-8 p-5 rounded-2xl bg-emerald-950/80 border-2 border-emerald-500 text-emerald-200 flex items-start gap-4 shadow-xl shadow-emerald-900/20 animate-fade-in" role="alert">
+          <div class="text-2xl">🎉</div>
+          <div>
+            <h4 class="font-bold text-base text-white">¡Inscripción Confirmada con Éxito!</h4>
+            <p class="text-sm text-emerald-200 mt-1 leading-relaxed">
+              Hemos registrado la solicitud de tu escuadra. En breve recibirás una invitación al canal de Discord oficial de árbitros y las llaves de emparejamiento.
+            </p>
+          </div>
+        </div>
+
+        <!-- Formulario -->
+        <form id="join-form" class="bg-slate-900/80 border border-purple-500/20 rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-xl space-y-6">
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <!-- Nombre del Equipo -->
+            <div>
+              <label for="team-name" class="block text-xs font-semibold uppercase tracking-wider text-purple-300 mb-2">
+                Nombre de la Escuadra / Roster *
+              </label>
+              <input type="text" id="team-name" required placeholder="Ej: Kronos Gaming" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-purple-500/30 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-purple-400 transition-colors">
+            </div>
+
+            <!-- Nombre de Capitán -->
+            <div>
+              <label for="captain-name" class="block text-xs font-semibold uppercase tracking-wider text-purple-300 mb-2">
+                Nombre y Apellido del Capitán *
+              </label>
+              <input type="text" id="captain-name" required placeholder="Ej: Lucas Martínez" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-purple-500/30 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-purple-400 transition-colors">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <!-- Email de Contacto -->
+            <div>
+              <label for="email" class="block text-xs font-semibold uppercase tracking-wider text-purple-300 mb-2">
+                Correo Electrónico *
+              </label>
+              <input type="email" id="email" required placeholder="capitan@escuadra.com" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-purple-500/30 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-purple-400 transition-colors">
+            </div>
+
+            <!-- Discord Tag -->
+            <div>
+              <label for="discord-tag" class="block text-xs font-semibold uppercase tracking-wider text-purple-300 mb-2">
+                Usuario de Discord (con #) *
+              </label>
+              <input type="text" id="discord-tag" required placeholder="Ej: ShadowRider#4512" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-purple-500/30 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-purple-400 transition-colors">
+            </div>
+          </div>
+
+          <!-- Selección de Torneo -->
+          <div>
+            <label for="form-tournament" class="block text-xs font-semibold uppercase tracking-wider text-purple-300 mb-2">
+              Torneo al que se postulan *
+            </label>
+            <select id="form-tournament" required class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-purple-500/30 text-white text-sm focus:outline-none focus:border-purple-400 transition-colors">
+              <!-- Opciones inyectadas dinámicamente desde app.js -->
+            </select>
+          </div>
+
+          <!-- Observaciones / Gamertags -->
+          <div>
+            <label for="roster-info" class="block text-xs font-semibold uppercase tracking-wider text-purple-300 mb-2">
+              Roster de Jugadores y Gamertags (Opcional)
+            </label>
+            <textarea id="roster-info" rows="3" placeholder="Indica los Gamertags de los 5 titulares y 1 suplente..." class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-purple-500/30 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-purple-400 transition-colors"></textarea>
+          </div>
+
+          <!-- Aceptación de Reglamento -->
+          <div class="flex items-center gap-3 pt-2">
+            <input type="checkbox" id="terms-agree" required class="w-4 h-4 rounded border-purple-500/40 text-purple-600 focus:ring-purple-500 bg-slate-950">
+            <label for="terms-agree" class="text-xs text-slate-400">
+              Aceptamos el código de conducta deportiva, fair play y reglamento del club NEXO.
+            </label>
+          </div>
+
+          <!-- Botón de Envío -->
+          <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:brightness-110 force-text-white font-bold text-base uppercase tracking-wider shadow-xl shadow-purple-600/30 transition-all hover:scale-[1.01] active:scale-[0.99]">
+            Confirmar Inscripción de Escuadra 🚀
+          </button>
+
+        </form>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== MODAL DE DETALLES DEL TORNEO ==================== -->
+  <div id="tournament-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    
+    <div class="relative w-full max-w-2xl bg-slate-900 border border-purple-500/30 rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+      
+      <!-- Imagen de Cabecera del Modal -->
+      <div class="relative h-48 sm:h-56 w-full">
+        <img id="modal-image" src="" alt="Portada del torneo" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
+        
+        <!-- Botón Cerrar (✕) -->
+        <button type="button" id="btn-close-modal" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-950/70 border border-purple-500/30 text-white flex items-center justify-center hover:bg-purple-600 transition-colors" aria-label="Cerrar ventana de detalles">
+          ✕
+        </button>
+
+        <span id="modal-game" class="absolute bottom-4 left-6 px-3 py-1 rounded-full text-xs font-semibold bg-purple-600/90 force-text-white shadow">
+          <!-- Juego -->
+        </span>
+      </div>
+
+      <!-- Cuerpo del Modal -->
+      <div class="p-6 sm:p-8 overflow-y-auto space-y-6">
+        <div>
+          <h3 id="modal-title" class="text-2xl sm:text-3xl font-extrabold text-white mb-2">
+            <!-- Título -->
+          </h3>
+          <p id="modal-description" class="text-slate-300 text-sm leading-relaxed">
+            <!-- Descripción -->
+          </p>
+        </div>
+
+        <!-- Ficha Técnica -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 rounded-2xl bg-slate-950/60 border border-purple-500/20 text-xs">
+          <div>
+            <span class="text-purple-400 block font-mono">PREMIOS</span>
+            <span id="modal-prizepool" class="font-bold text-emerald-400 text-sm"></span>
+          </div>
+          <div>
+            <span class="text-purple-400 block font-mono">FECHA</span>
+            <span id="modal-date" class="font-bold text-white"></span>
+          </div>
+          <div>
+            <span class="text-purple-400 block font-mono">FORMATO</span>
+            <span id="modal-format" class="font-bold text-white"></span>
+          </div>
+          <div>
+            <span class="text-purple-400 block font-mono">DISPONIBILIDAD</span>
+            <span id="modal-slots" class="font-bold text-cyan-400"></span>
+          </div>
+        </div>
+
+        <!-- Reglas Oficiales -->
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-purple-400 mb-1">
+            Reglamento & Requisitos de Admisión
+          </h4>
+          <p id="modal-rules" class="text-xs text-slate-400 leading-relaxed bg-slate-950/40 p-3 rounded-xl border border-purple-500/10">
+            <!-- Reglas -->
+          </p>
+        </div>
+
+        <!-- Acción de Inscripción desde el Modal -->
+        <button type="button" id="btn-modal-join" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 force-text-white font-bold text-sm uppercase tracking-wider shadow-lg shadow-purple-600/30 transition-all">
+          Inscribir mi Escuadra a este Torneo &rarr;
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="mt-auto border-t border-purple-500/20 bg-slate-950 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <div class="flex items-center gap-3 text-center md:text-left">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-600 to-cyan-400 flex items-center justify-center">
+          <span class="font-black text-white text-xs">NX</span>
+        </div>
+        <p class="text-xs text-slate-400">
+          © 2026 NEXO E-Sports Club. Proyecto Oficial Clase 07. Titulación: Full-Stack Agentic UI Developer.
+        </p>
+      </div>
+
+      <!-- Redes Competitivas -->
+      <div class="flex items-center gap-6 text-xs text-purple-400 font-mono">
+        <a href="#discord" class="hover:text-purple-300 transition-colors">DISCORD</a>
+        <a href="#twitch" class="hover:text-purple-300 transition-colors">TWITCH</a>
+        <a href="#youtube" class="hover:text-purple-300 transition-colors">YOUTUBE</a>
+        <a href="#twitter" class="hover:text-purple-300 transition-colors">X / TWITTER</a>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Script Principal -->
+  <script src="app.js"></script>
+
+</body>
+</html>

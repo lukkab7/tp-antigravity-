@@ -1,0 +1,8 @@
+# Dependencias y librerías externas
+.agents/skills/agentic-awesome-skills/
+node_modules/
+
+# Logs y temporales
+*.log
+.DS_Store
+Thumbs.db
